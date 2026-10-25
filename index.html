@@ -40,6 +40,21 @@ footer{text-align:center;background:#17191f;padding:22px;color:#bbb}
 <a href="#gallery">Gallery</a>
 <a href="#updates">Updates</a>
 </nav>
+  
+<div style="text-align:center;padding:15px">
+  <button id="adminLoginBtn" class="btn" onclick="document.getElementById('adminLoginBox').hidden=false">
+    Admin Login
+  </button>
+
+  <div id="adminLoginBox" hidden style="margin:15px auto;padding:20px;max-width:350px;background:#1b1d23;border-radius:12px">
+    <h2>Admin Login</h2>
+    <input id="adminEmail" type="email" placeholder="Admin Email" style="padding:10px;width:90%;margin:6px">
+    <input id="adminPassword" type="password" placeholder="Password" style="padding:10px;width:90%;margin:6px">
+    <button class="btn" onclick="adminSignIn()">Login</button>
+    <p id="loginMessage"></p>
+  </div>
+</div>
+
 
 <div class="hero" id="home">
 <h2>एक गाव • एक टीम • एक अभिमान 🏆</h2>
@@ -97,4 +112,46 @@ footer{text-align:center;background:#17191f;padding:22px;color:#bbb}
 </footer>
 
 </body>
+  
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://piumekdcicmhurcosqnh.supabase.co";
+const SUPABASE_KEY = "sb_publishable_MPOfSlTZQyXcXlzdVPA4ow_NWK8ht4S";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+async function adminSignIn() {
+  const email = document.getElementById("adminEmail").value.trim();
+  const password = document.getElementById("adminPassword").value;
+  const message = document.getElementById("loginMessage");
+
+  message.textContent = "Logging in...";
+
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error) {
+    message.textContent = "Login failed: " + error.message;
+    return;
+  }
+
+  const { data: admin, error: adminError } =
+    await supabaseClient.rpc("is_admin");
+
+  if (adminError || admin !== true) {
+    await supabaseClient.auth.signOut();
+    message.textContent = "This account is not an authorized admin.";
+    return;
+  }
+
+  message.textContent = "Admin login successful!";
+}
+</script>
+
 </html>
