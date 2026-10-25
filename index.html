@@ -111,6 +111,39 @@ footer{text-align:center;background:#17191f;padding:22px;color:#bbb}
 <p class="small">Official Team Website</p>
 </footer>
 
+<section id="adminDashboard" hidden style="max-width:900px;margin:25px auto;padding:20px;background:#1b1d23;color:white;border-radius:14px">
+  <h2>🏏 Admin Dashboard</h2>
+  <p>Aai Gavdevi Cricket Team Asalpada</p>
+
+  <hr>
+  <h3>📢 Team Updates</h3>
+  <input id="updateTitle" placeholder="Update title" style="padding:10px;width:90%;margin:5px">
+  <textarea id="updateContent" placeholder="Write your update" style="padding:10px;width:90%;margin:5px"></textarea>
+  <button class="btn" onclick="saveUpdate()">Publish Update</button>
+  <p id="updateMessage"></p>
+
+  <hr>
+  <h3>🏏 Match Schedule</h3>
+  <input id="opponent" placeholder="Opponent team" style="padding:10px;width:90%;margin:5px">
+  <input id="matchDate" type="datetime-local" style="padding:10px;margin:5px">
+  <input id="venue" placeholder="Match venue" style="padding:10px;width:90%;margin:5px">
+  <button class="btn" onclick="saveMatch()">Add Match</button>
+  <p id="matchMessage"></p>
+
+  <hr>
+  <h3>📊 Scoreboard</h3>
+  <p>पहिल्यांदा Match Schedule मध्ये मॅच जोडा. त्यानंतर तिचा Scoreboard अपडेट करता येईल.</p>
+  <input id="scoreMatchId" type="number" placeholder="Match ID" style="padding:10px;width:90%;margin:5px">
+  <input id="teamRuns" type="number" min="0" placeholder="Runs" style="padding:10px;width:90%;margin:5px">
+  <input id="wickets" type="number" min="0" max="10" placeholder="Wickets (0–10)" style="padding:10px;width:90%;margin:5px">
+  <input id="overs" type="number" min="0" step="0.1" placeholder="Overs (e.g. 12.3)" style="padding:10px;width:90%;margin:5px">
+  <input id="target" type="number" min="0" placeholder="Target (optional)" style="padding:10px;width:90%;margin:5px">
+  <button class="btn" onclick="saveScore()">Save Score</button>
+  <p id="scoreMessage"></p>
+
+  <button class="btn" onclick="adminLogout()">Logout</button>
+</section>
+
 </body>
   
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -151,6 +184,7 @@ async function adminSignIn() {
   }
 
   message.textContent = "Admin login successful!";
+  document.getElementById("adminDashboard").hidden = false;
 }
 </script>
 
