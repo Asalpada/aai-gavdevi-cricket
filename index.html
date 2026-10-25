@@ -184,7 +184,10 @@ async function adminSignIn() {
   }
 
   message.textContent = "Admin login successful!";
-  document.getElementById("adminDashboard").hidden = false;
+  const dashboard = document.getElementById("adminDashboard");
+dashboard.hidden = false;
+dashboard.style.display = "block";
+dashboard.scrollIntoView({ behavior: "smooth" });
 }
 </script>
 
