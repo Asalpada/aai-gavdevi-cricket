@@ -141,6 +141,13 @@ footer{text-align:center;background:#17191f;padding:22px;color:#bbb}
   <button class="btn" onclick="saveScore()">Save Score</button>
   <p id="scoreMessage"></p>
 
+<hr>
+<h3>📸 Photo Gallery</h3>
+<input id="galleryTitle" placeholder="Photo title" style="padding:10px;width:90%;margin:5px">
+<input id="galleryUrl" type="url" placeholder="Photo image URL" style="padding:10px;width:90%;margin:5px">
+<button class="btn" onclick="saveGallery()">Add Photo</button>
+<p id="galleryMessage"></p>
+
   <button class="btn" onclick="adminLogout()">Logout</button>
 </section>
 
@@ -189,6 +196,45 @@ dashboard.hidden = false;
 dashboard.style.display = "block";
 dashboard.scrollIntoView({ behavior: "smooth" });
 }
+  
+async function saveGallery() {
+  const title = document.getElementById("galleryTitle").value.trim();
+  const imageUrl = document.getElementById("galleryUrl").value.trim();
+  const message = document.getElementById("galleryMessage");
+
+  if (!title || !imageUrl) {
+    message.textContent = "Photo title आणि image URL भरा.";
+    return;
+  }
+
+  try {
+    const url = new URL(imageUrl);
+
+    if (url.protocol !== "https:" && url.protocol !== "http:") {
+      message.textContent = "कृपया योग्य image URL द्या.";
+      return;
+    }
+
+    const { error } = await supabaseClient
+      .from("gallery")
+      .insert({
+        title: title,
+        image_url: url.href
+      });
+
+    if (error) {
+      message.textContent = "Error: " + error.message;
+      return;
+    }
+
+    message.textContent = "Photo माहिती सेव्ह झाली!";
+    document.getElementById("galleryTitle").value = "";
+    document.getElementById("galleryUrl").value = "";
+  } catch (error) {
+    message.textContent = "कृपया योग्य image URL द्या.";
+  }
+}
+
 </script>
   
 </body>
