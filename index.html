@@ -161,6 +161,13 @@ footer{text-align:center;background:#17191f;padding:22px;color:#bbb}
 
 <input id="target" type="number" min="0" placeholder="Target (optional)" style="padding:10px;width:90%;margin:5px">
 
+<label for="matchStatus">Match Status:</label>
+<select id="matchStatus" style="padding:10px;width:90%;margin:5px">
+  <option value="Upcoming">Upcoming</option>
+  <option value="LIVE">🔴 LIVE</option>
+  <option value="Completed">Completed</option>
+</select>
+
 <button class="btn" onclick="saveScore()">Save Score</button>
 <p id="scoreMessage"></p>
 
