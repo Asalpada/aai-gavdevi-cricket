@@ -468,6 +468,67 @@ async function loadMatches() {
 loadMatches();
 
 
+async function saveScore() {
+  const matchId = document.getElementById("scoreMatchId").value.trim();
+  const runs = document.getElementById("teamRuns").value;
+  const wickets = document.getElementById("wickets").value;
+  const overs = document.getElementById("overs").value;
+  const target = document.getElementById("target").value;
+  const message = document.getElementById("scoreMessage");
+
+  if (!matchId || runs === "" || wickets === "" || overs === "") {
+    message.textContent = "कृपया Match ID, Runs, Wickets आणि Overs भरा.";
+    return;
+  }
+
+  message.textContent = "Score सेव्ह होत आहे...";
+
+  const { data: existing, error: findError } = await supabaseClient
+    .from("scoreboards")
+    .select("id")
+    .eq("match_id", Number(matchId))
+    .maybeSingle();
+
+  if (findError) {
+    message.textContent = "Error: " + findError.message;
+    return;
+  }
+
+  const scoreData = {
+    match_id: Number(matchId),
+    team_runs: Number(runs),
+    wickets: Number(wickets),
+    overs: Number(overs),
+    target: target === "" ? null : Number(target),
+    updated_at: new Date().toISOString()
+  };
+
+  let result;
+
+  if (existing) {
+    result = await supabaseClient
+      .from("scoreboards")
+      .update(scoreData)
+      .eq("id", existing.id);
+  } else {
+    result = await supabaseClient
+      .from("scoreboards")
+      .insert([scoreData]);
+  }
+
+  if (result.error) {
+    message.textContent = "Error: " + result.error.message;
+    console.error(result.error);
+    return;
+  }
+
+  message.textContent = "Score यशस्वीपणे सेव्ह झाला!";
+
+  if (typeof loadScoreboard === "function") {
+    await loadScoreboard();
+  }
+}
+
 </script>
   
 </body>
