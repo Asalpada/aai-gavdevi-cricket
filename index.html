@@ -48,7 +48,44 @@ nav a:hover {
 }
 
 nav a{color:white;text-decoration:none;padding:13px;font-size:14px}
-.hero{text-align:center;padding:45px 18px;background:linear-gradient(135deg,#351216,#111827)}
+
+.hero {
+  text-align: center;
+  padding: 55px 18px;
+  background:
+    radial-gradient(ellipse at top, #542027 0%, transparent 65%),
+    linear-gradient(135deg, #351216, #111827);
+  border-bottom: 2px solid #e63946;
+}
+
+.hero h2 {
+  font-size: 30px;
+  line-height: 1.4;
+  color: #ffd166;
+  margin-bottom: 18px;
+}
+
+.hero p {
+  line-height: 1.8;
+  color: #eeeeee;
+  max-width: 600px;
+  margin: 12px auto;
+}
+
+@media screen and (max-width: 600px) {
+  .hero {
+    padding: 35px 14px;
+  }
+
+  .hero h2 {
+    font-size: 24px;
+  }
+
+  .hero p {
+    font-size: 15px;
+  }
+}
+
 .hero h2{font-size:30px;color:#ffd166}
 .hero p{line-height:1.7}
 .btn{display:inline-block;background:#e63946;color:white;padding:12px 18px;border-radius:7px;text-decoration:none;margin-top:10px}
