@@ -223,6 +223,7 @@ footer{text-align:center;background:#17191f;padding:22px;color:#bbb}
 
   
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+async function loadGallery() {
   const container = document.getElementById("galleryContainer");
   if (!container) return;
 
@@ -345,7 +346,49 @@ async function saveGallery() {
   }
 }
 
-async function loadGallery() 
+async function loadGallery() {
+  const container = document.getElementById("galleryContainer");
+  if (!container) return;
+
+  container.textContent = "फोटो लोड होत आहेत...";
+
+  const { data, error } = await supabaseClient
+    .from("gallery")
+    .select("title, image_url");
+
+  if (error) {
+    container.textContent = "Gallery लोड झाली नाही: " + error.message;
+    console.error("Gallery error:", error);
+    return;
+  }
+
+  container.replaceChildren();
+
+  if (!data || data.length === 0) {
+    container.textContent = "अजून फोटो जोडलेले नाहीत.";
+    return;
+  }
+
+  data.forEach((photo) => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const img = document.createElement("img");
+    img.src = photo.image_url;
+    img.alt = photo.title || "Team photo";
+    img.loading = "lazy";
+    img.style.width = "100%";
+    img.style.borderRadius = "10px";
+
+    const title = document.createElement("h3");
+    title.textContent = photo.title || "Team Photo";
+
+    card.append(img, title);
+    container.appendChild(card);
+  });
+}
+
+loadGallery();
 
 async function saveUpdate() {
   const title = document.getElementById("updateTitle").value.trim();
@@ -647,7 +690,7 @@ async function loadScoreboard() {
         <p>Overs: ${score.opponent_overs ?? 0}</p>
 
         ${score.target != null
-          ? `<p>🎯 Target: ${score.target}</p>`
+          ? <p>🎯 Target: ${score.target}</p>
           : ""}
       </div>
     `;
