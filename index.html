@@ -142,16 +142,28 @@ footer{text-align:center;background:#17191f;padding:22px;color:#bbb}
   <button class="btn" onclick="saveMatch()">Add Match</button>
   <p id="matchMessage"></p>
 
-  <hr>
-  <h3>📊 Scoreboard</h3>
-  <p>पहिल्यांदा Match Schedule मध्ये मॅच जोडा. त्यानंतर तिचा Scoreboard अपडेट करता येईल.</p>
-  <input id="scoreMatchId" type="number" placeholder="Match ID" style="padding:10px;width:90%;margin:5px">
-  <input id="teamRuns" type="number" min="0" placeholder="Runs" style="padding:10px;width:90%;margin:5px">
-  <input id="wickets" type="number" min="0" max="10" placeholder="Wickets (0–10)" style="padding:10px;width:90%;margin:5px">
-  <input id="overs" type="number" min="0" step="0.1" placeholder="Overs (e.g. 12.3)" style="padding:10px;width:90%;margin:5px">
-  <input id="target" type="number" min="0" placeholder="Target (optional)" style="padding:10px;width:90%;margin:5px">
-  <button class="btn" onclick="saveScore()">Save Score</button>
-  <p id="scoreMessage"></p>
+  
+<hr>
+<h3>📊 Scoreboard</h3>
+<p>पहिल्यांदा Match Schedule मध्ये मॅच जोडा. त्यानंतर दोन्ही टीमचे स्कोअर अपडेट करा.</p>
+
+<input id="scoreMatchId" type="number" placeholder="Match ID" style="padding:10px;width:90%;margin:5px">
+
+<h4>🏏 Aai Gavdevi Team</h4>
+<input id="teamRuns" type="number" min="0" placeholder="Runs" style="padding:10px;width:90%;margin:5px">
+<input id="wickets" type="number" min="0" max="10" placeholder="Wickets (0–10)" style="padding:10px;width:90%;margin:5px">
+<input id="overs" type="number" min="0" step="0.1" placeholder="Overs (e.g. 12.3)" style="padding:10px;width:90%;margin:5px">
+
+<h4>🏏 Opponent Team</h4>
+<input id="opponentRuns" type="number" min="0" placeholder="Opponent Runs" style="padding:10px;width:90%;margin:5px">
+<input id="opponentWickets" type="number" min="0" max="10" placeholder="Opponent Wickets (0–10)" style="padding:10px;width:90%;margin:5px">
+<input id="opponentOvers" type="number" min="0" step="0.1" placeholder="Opponent Overs (e.g. 12.3)" style="padding:10px;width:90%;margin:5px">
+
+<input id="target" type="number" min="0" placeholder="Target (optional)" style="padding:10px;width:90%;margin:5px">
+
+<button class="btn" onclick="saveScore()">Save Score</button>
+<p id="scoreMessage"></p>
+
 
 <hr>
 <h3>📸 Photo Gallery</h3>
