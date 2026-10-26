@@ -564,6 +564,7 @@ async function saveScore() {
 }
 
 
+
 async function loadScoreboard() {
   const container = document.getElementById("scoreboardContainer");
 
@@ -574,7 +575,17 @@ async function loadScoreboard() {
 
   const { data, error } = await supabaseClient
     .from("scoreboards")
-    .select("match_id, team_runs, wickets, overs, target, matches(opponent, match_date, venue)")
+    .select(`
+      match_id,
+      team_runs,
+      wickets,
+      overs,
+      opponent_runs,
+      opponent_wickets,
+      opponent_overs,
+      target,
+      matches(opponent, match_date, venue)
+    `)
     .order("updated_at", { ascending: false });
 
   if (error) {
@@ -584,17 +595,17 @@ async function loadScoreboard() {
   }
 
   if (!data || data.length === 0) {
-    container.innerHTML = `
-      <div class="card">सध्या स्कोअर उपलब्ध नाही.</div>
-    `;
+    container.innerHTML =
+      '<div class="card">सध्या स्कोअर उपलब्ध नाही.</div>';
     return;
   }
 
   container.innerHTML = data.map(score => {
     const match = score.matches;
-    const opponent = match?.opponent || "Unknown Team";
+    const opponent = match?.opponent || "Opponent Team";
+
     const date = match?.match_date
-      ? new Date(match.match_date).toLocaleString("en-IN")
+      ? new Date(match.match_date).toLocaleDateString("en-IN")
       : "";
 
     return `
@@ -602,9 +613,22 @@ async function loadScoreboard() {
         <h3>🏏 Aai Gavdevi vs ${opponent}</h3>
         <p>📅 ${date}</p>
         <p>📍 ${match?.venue || ""}</p>
+
+        <hr>
+
+        <h4>🏏 Aai Gavdevi Team</h4>
         <h2>${score.team_runs}/${score.wickets}</h2>
         <p>Overs: ${score.overs}</p>
-        ${score.target != null ? `<p>Target: ${score.target}</p>` : ""}
+
+        <hr>
+
+        <h4>🏏 ${opponent}</h4>
+        <h2>${score.opponent_runs ?? 0}/${score.opponent_wickets ?? 0}</h2>
+        <p>Overs: ${score.opponent_overs ?? 0}</p>
+
+        ${score.target != null
+          ? `<p>🎯 Target: ${score.target}</p>`
+          : ""}
       </div>
     `;
   }).join("");
