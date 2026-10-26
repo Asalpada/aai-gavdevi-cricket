@@ -10,7 +10,43 @@ body{margin:0;background:#101114;color:white;font-family:Arial,sans-serif}
 header{background:#17191f;padding:22px 14px;text-align:center;border-bottom:3px solid #e63946}
 header h1{color:#ffd166;font-size:25px;margin:8px 0}
 header p{color:#ddd}
-nav{display:flex;justify-content:center;flex-wrap:wrap;background:#22252c}
+
+nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  background: #22252c;
+  padding: 6px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 12px 14px;
+  font-size: 14px;
+  border-radius: 7px;
+  text-align: center;
+}
+
+nav a:hover {
+  background: #e63946;
+}
+
+@media screen and (max-width: 600px) {
+  nav {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+    padding: 8px;
+  }
+
+  nav a {
+    padding: 12px 4px;
+    font-size: 13px;
+  }
+}
+
 nav a{color:white;text-decoration:none;padding:13px;font-size:14px}
 .hero{text-align:center;padding:45px 18px;background:linear-gradient(135deg,#351216,#111827)}
 .hero h2{font-size:30px;color:#ffd166}
