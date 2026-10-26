@@ -322,6 +322,36 @@ async function loadGallery() {
 
 loadGallery();
 
+async function saveUpdate() {
+  const title = document.getElementById("updateTitle").value.trim();
+  const content = document.getElementById("updateContent").value.trim();
+  const message = document.getElementById("updateMessage");
+
+  if (!title || !content) {
+    message.textContent = "कृपया Update title आणि मजकूर भरा.";
+    return;
+  }
+
+  message.textContent = "Update सेव्ह होत आहे...";
+
+  const { error } = await supabaseClient
+    .from("team_updates")
+    .insert({
+      title: title,
+      content: content
+    });
+
+  if (error) {
+    message.textContent = "Error: " + error.message;
+    console.error(error);
+    return;
+  }
+
+  message.textContent = "Update यशस्वीपणे सेव्ह झाली!";
+  document.getElementById("updateTitle").value = "";
+  document.getElementById("updateContent").value = "";
+}
+
 </script>
   
 </body>
