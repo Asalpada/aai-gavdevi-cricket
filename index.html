@@ -484,20 +484,35 @@ loadMatches();
 
 
 
+
 async function saveScore() {
   const matchId = document.getElementById("scoreMatchId").value.trim();
+
   const runs = document.getElementById("teamRuns").value;
   const wickets = document.getElementById("wickets").value;
   const overs = document.getElementById("overs").value;
+
+  const opponentRuns = document.getElementById("opponentRuns").value;
+  const opponentWickets = document.getElementById("opponentWickets").value;
+  const opponentOvers = document.getElementById("opponentOvers").value;
+
   const target = document.getElementById("target").value;
   const message = document.getElementById("scoreMessage");
 
-  if (!matchId || runs === "" || wickets === "" || overs === "") {
-    message.textContent = "कृपया Match ID, Runs, Wickets आणि Overs भरा.";
+  if (
+    !matchId ||
+    runs === "" ||
+    wickets === "" ||
+    overs === "" ||
+    opponentRuns === "" ||
+    opponentWickets === "" ||
+    opponentOvers === ""
+  ) {
+    message.textContent = "कृपया Match ID आणि दोन्ही टीमचे सर्व स्कोअर भरा.";
     return;
   }
 
-  message.textContent = "Score सेव्ह होत आहे...";
+  message.textContent = "दोन्ही टीमचे स्कोअर सेव्ह होत आहेत...";
 
   const { data: existing, error: findError } = await supabaseClient
     .from("scoreboards")
@@ -515,6 +530,9 @@ async function saveScore() {
     team_runs: Number(runs),
     wickets: Number(wickets),
     overs: Number(overs),
+    opponent_runs: Number(opponentRuns),
+    opponent_wickets: Number(opponentWickets),
+    opponent_overs: Number(opponentOvers),
     target: target === "" ? null : Number(target),
     updated_at: new Date().toISOString()
   };
@@ -538,7 +556,7 @@ async function saveScore() {
     return;
   }
 
-  message.textContent = "पहिल्या टीमचा Score सेव्ह झाला!";
+  message.textContent = "दोन्ही टीमचे स्कोअर यशस्वीपणे सेव्ह झाले!";
 
   if (typeof loadScoreboard === "function") {
     await loadScoreboard();
