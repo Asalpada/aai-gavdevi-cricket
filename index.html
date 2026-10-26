@@ -471,6 +471,7 @@ async function loadMatches() {
 loadMatches();
 
 
+
 async function saveScore() {
   const matchId = document.getElementById("scoreMatchId").value.trim();
   const runs = document.getElementById("teamRuns").value;
@@ -525,12 +526,13 @@ async function saveScore() {
     return;
   }
 
-  message.textContent = "Score यशस्वीपणे सेव्ह झाला!";
+  message.textContent = "पहिल्या टीमचा Score सेव्ह झाला!";
 
   if (typeof loadScoreboard === "function") {
     await loadScoreboard();
   }
 }
+
 
 async function loadScoreboard() {
   const container = document.getElementById("scoreboardContainer");
