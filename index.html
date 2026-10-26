@@ -504,6 +504,7 @@ async function saveScore() {
   const opponentOvers = document.getElementById("opponentOvers").value;
 
   const target = document.getElementById("target").value;
+  const status = document.getElementById("matchStatus").value;
   const message = document.getElementById("scoreMessage");
 
   if (
@@ -541,6 +542,7 @@ async function saveScore() {
     opponent_wickets: Number(opponentWickets),
     opponent_overs: Number(opponentOvers),
     target: target === "" ? null : Number(target),
+    status: status,
     updated_at: new Date().toISOString()
   };
 
