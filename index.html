@@ -585,6 +585,7 @@ async function loadScoreboard() {
   const { data, error } = await supabaseClient
     .from("scoreboards")
     .select(`
+      status,
       match_id,
       team_runs,
       wickets,
@@ -619,7 +620,16 @@ async function loadScoreboard() {
 
     return `
       <div class="card">
-        <h3>🏏 Aai Gavdevi vs ${opponent}</h3>
+        <h3>🏏 Aai Gavdevi Asalpada vs ${opponent}</h3>
+        <p>
+  ${
+    score.status === "LIVE"
+      ? "🔴 LIVE"
+      : score.status === "Completed"
+      ? "✅ COMPLETED"
+      : "🕒 UPCOMING"
+  }
+</p>
         <p>📅 ${date}</p>
         <p>📍 ${match?.venue || ""}</p>
 
