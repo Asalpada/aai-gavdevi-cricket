@@ -7,7 +7,25 @@
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#101114;color:white;font-family:Arial,sans-serif}
-header{background:#17191f;padding:22px 14px;text-align:center;border-bottom:3px solid #e63946}
+
+header {
+  background: linear-gradient(135deg, #20232c, #17191f, #351216);
+  padding: 25px 14px;
+  text-align: center;
+  border-bottom: 3px solid #e63946;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+header > div {
+  filter: drop-shadow(0 0 8px rgba(255, 209, 102, 0.25));
+}
+
+@media screen and (max-width: 600px) {
+  header {
+    padding: 20px 12px;
+  }
+}
+
 header h1{color:#ffd166;font-size:25px;margin:8px 0}
 header p{color:#ddd}
 
