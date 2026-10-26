@@ -389,6 +389,45 @@ async function loadUpdates() {
   `).join("");
 }
 
+  
+async function saveMatch() {
+  const opponent = document.getElementById("opponent").value.trim();
+  const matchDate = document.getElementById("matchDate").value;
+  const venue = document.getElementById("venue").value.trim();
+  const message = document.getElementById("matchMessage");
+
+  if (!opponent || !matchDate || !venue) {
+    message.textContent = "कृपया Opponent, Date आणि Venue भरा.";
+    return;
+  }
+
+  message.textContent = "Match सेव्ह होत आहे...";
+
+  const { error } = await supabaseClient
+    .from("matches")
+    .insert([{
+      opponent: opponent,
+      match_date: new Date(matchDate).toISOString(),
+      venue: venue
+    }]);
+
+  if (error) {
+    console.error(error);
+    message.textContent = "Error: " + error.message;
+    return;
+  }
+
+  message.textContent = "Match यशस्वीपणे सेव्ह झाली!";
+
+  document.getElementById("opponent").value = "";
+  document.getElementById("matchDate").value = "";
+  document.getElementById("venue").value = "";
+
+  if (typeof loadMatches === "function") {
+    await loadMatches();
+  }
+}
+
 loadUpdates();
 
 </script>
