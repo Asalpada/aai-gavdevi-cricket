@@ -569,6 +569,11 @@ async function saveScore() {
 
   if (typeof loadScoreboard === "function") {
     await loadScoreboard();
+    
+setInterval(() => {
+  loadScoreboard();
+}, 10000);
+
   }
 }
 
