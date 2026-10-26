@@ -457,7 +457,7 @@ async function loadMatches() {
 
   container.innerHTML = data.map(match => `
     <div class="card">
-      <h3>🏏 Aai Gavdevi vs ${match.opponent}</h3>
+      <h3>🏏 Aai Gavdevi Asalpada vs ${match.opponent}</h3>
       <p>📅 ${new Date(match.match_date).toLocaleString("en-IN")}</p>
       <p>📍 ${match.venue}</p>
       <p>${match.status || "Upcoming"}</p>
