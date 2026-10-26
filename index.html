@@ -171,6 +171,45 @@ footer{text-align:center;background:#17191f;padding:22px;color:#bbb}
 <button class="btn" onclick="saveScore()">Save Score</button>
 <p id="scoreMessage"></p>
 
+<hr>
+<h3>⚡ Quick Score Update</h3>
+<p>चालू मॅचचा Match ID टाका आणि स्कोअर पटकन अपडेट करा.</p>
+
+<input id="quickMatchId" type="number" min="1"
+  placeholder="Match ID"
+  style="padding:10px;width:90%;margin:5px">
+
+<h4>🏏 Aai Gavdevi Team</h4>
+<input id="quickRuns" type="number" min="0"
+  placeholder="Total Runs"
+  style="padding:10px;width:90%;margin:5px">
+
+<input id="quickWickets" type="number" min="0" max="10"
+  placeholder="Wickets (0–10)"
+  style="padding:10px;width:90%;margin:5px">
+
+<input id="quickOvers" type="number" min="0" step="0.1"
+  placeholder="Overs (e.g. 12.3)"
+  style="padding:10px;width:90%;margin:5px">
+
+<h4>🏏 Opponent Team</h4>
+<input id="quickOpponentRuns" type="number" min="0"
+  placeholder="Opponent Runs"
+  style="padding:10px;width:90%;margin:5px">
+
+<input id="quickOpponentWickets" type="number" min="0" max="10"
+  placeholder="Opponent Wickets (0–10)"
+  style="padding:10px;width:90%;margin:5px">
+
+<input id="quickOpponentOvers" type="number" min="0" step="0.1"
+  placeholder="Opponent Overs (e.g. 12.3)"
+  style="padding:10px;width:90%;margin:5px">
+
+<button class="btn" onclick="quickUpdateScore()">
+  ⚡ Update Score
+</button>
+<p id="quickScoreMessage"></p>
+
 
 <hr>
 <h3>📸 Photo Gallery</h3>
