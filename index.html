@@ -696,6 +696,74 @@ async function loadScoreboard() {
     `;
   }).join("");
 }
+  
+async function quickUpdateScore() {
+  const matchId = document.getElementById("quickMatchId").value.trim();
+  const runs = document.getElementById("quickRuns").value;
+  const wickets = document.getElementById("quickWickets").value;
+  const overs = document.getElementById("quickOvers").value;
+
+  const opponentRuns = document.getElementById("quickOpponentRuns").value;
+  const opponentWickets = document.getElementById("quickOpponentWickets").value;
+  const opponentOvers = document.getElementById("quickOpponentOvers").value;
+
+  const message = document.getElementById("quickScoreMessage");
+
+  if (
+    !matchId ||
+    runs === "" ||
+    wickets === "" ||
+    overs === "" ||
+    opponentRuns === "" ||
+    opponentWickets === "" ||
+    opponentOvers === ""
+  ) {
+    message.textContent = "कृपया Match ID आणि दोन्ही टीमचे सर्व स्कोअर भरा.";
+    return;
+  }
+
+  message.textContent = "स्कोअर अपडेट होत आहे...";
+
+  const { data: existing, error: findError } = await supabaseClient
+    .from("scoreboards")
+    .select("id")
+    .eq("match_id", Number(matchId))
+    .maybeSingle();
+
+  if (findError) {
+    message.textContent = "Error: " + findError.message;
+    return;
+  }
+
+  if (!existing) {
+    message.textContent = "या Match ID साठी Scoreboard नाही. आधी मुख्य Scoreboard फॉर्ममधून स्कोअर सेव्ह करा.";
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("scoreboards")
+    .update({
+      team_runs: Number(runs),
+      wickets: Number(wickets),
+      overs: Number(overs),
+      opponent_runs: Number(opponentRuns),
+      opponent_wickets: Number(opponentWickets),
+      opponent_overs: Number(opponentOvers),
+      updated_at: new Date().toISOString()
+    })
+    .eq("id", existing.id);
+
+  if (error) {
+    message.textContent = "Error: " + error.message;
+    console.error(error);
+    return;
+  }
+
+  message.textContent = "✅ दोन्ही टीमचे स्कोअर अपडेट झाले!";
+
+  await loadScoreboard();
+}
+
 
 loadScoreboard();
 
