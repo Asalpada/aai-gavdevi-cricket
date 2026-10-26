@@ -354,6 +354,38 @@ async function saveUpdate() {
   document.getElementById("updateContent").value = "";
 }
 
+async function loadUpdates() {
+  const container = document.getElementById("updatesContainer");
+
+  const { data, error } = await supabaseClient
+    .from("team_updates")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Updates error:", error.message);
+    container.innerHTML = "<p>Updates लोड होत नाहीत.</p>";
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    container.innerHTML = `
+      <div class="card">
+        अजून नवीन Updates नाहीत.
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = data.map(update => `
+    <div class="card">
+      <h3>${update.title}</h3>
+      <p>${update.content}</p>
+    </div>
+  `).join("");
+}
+
+loadUpdates();
+
 </script>
   
 </body>
