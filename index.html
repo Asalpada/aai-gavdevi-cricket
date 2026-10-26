@@ -429,6 +429,44 @@ async function saveMatch() {
 }
 
 
+async function loadMatches() {
+  const container = document.getElementById("matchesContainer");
+
+  if (!container) {
+    console.error("matchesContainer सापडला नाही");
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("matches")
+    .select("*")
+    .order("match_date", { ascending: true });
+
+  if (error) {
+    console.error("Matches error:", error.message);
+    container.innerHTML = "<p>मॅच लोड होत नाहीत.</p>";
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    container.innerHTML = `
+      <div class="card">सध्या कोणत्याही मॅचचे वेळापत्रक उपलब्ध नाही.</div>
+    `;
+    return;
+  }
+
+  container.innerHTML = data.map(match => `
+    <div class="card">
+      <h3>🏏 Aai Gavdevi vs ${match.opponent}</h3>
+      <p>📅 ${new Date(match.match_date).toLocaleString("en-IN")}</p>
+      <p>📍 ${match.venue}</p>
+      <p>${match.status || "Upcoming"}</p>
+    </div>
+  `).join("");
+}
+
+loadMatches();
+
 
 </script>
   
