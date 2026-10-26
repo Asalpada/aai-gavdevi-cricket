@@ -648,7 +648,7 @@ async function loadScoreboard() {
         <p>Overs: ${score.opponent_overs ?? 0}</p>
 
         ${score.target != null
-          ? <p>🎯 Target: ${score.target}</p>
+          ? `<p>🎯 Target: ${score.target}</p>`
           : ""}
       </div>
     `;
